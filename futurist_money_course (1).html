@@ -1,0 +1,1318 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CRYPTO EMPIRE - Convierte $100 en $10,000</title>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;600;700;900&family=Orbitron:wght@400;700;900&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        /* Navigation Menu */
+        .navbar {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            background: rgba(10, 10, 10, 0.95);
+            backdrop-filter: blur(15px);
+            border-bottom: 1px solid rgba(110, 68, 255, 0.3);
+            z-index: 1000;
+            padding: 15px 0;
+            transition: all 0.3s ease;
+        }
+
+        .navbar.scrolled {
+            background: rgba(10, 10, 10, 0.98);
+            box-shadow: 0 5px 30px rgba(110, 68, 255, 0.2);
+        }
+
+        .nav-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0 20px;
+        }
+
+        .logo {
+            font-family: 'Orbitron', monospace;
+            font-size: 1.8rem;
+            font-weight: 900;
+            background: linear-gradient(45deg, #6E44FF, #00F0FF);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            text-decoration: none;
+        }
+
+        .nav-menu {
+            display: flex;
+            list-style: none;
+            gap: 30px;
+            align-items: center;
+        }
+
+        .nav-link {
+            color: #B0B0B0;
+            text-decoration: none;
+            font-weight: 500;
+            font-size: 1rem;
+            transition: all 0.3s ease;
+            position: relative;
+            padding: 8px 16px;
+            border-radius: 25px;
+        }
+
+        .nav-link:hover {
+            color: #00F0FF;
+            background: rgba(110, 68, 255, 0.1);
+            transform: translateY(-2px);
+        }
+
+        .nav-link.active {
+            color: #6E44FF;
+            background: rgba(110, 68, 255, 0.2);
+        }
+
+        .nav-cta {
+            background: linear-gradient(45deg, #6E44FF, #00F0FF);
+            color: white;
+            padding: 12px 24px;
+            border-radius: 25px;
+            text-decoration: none;
+            font-weight: 700;
+            transition: all 0.3s ease;
+            box-shadow: 0 5px 15px rgba(110, 68, 255, 0.3);
+        }
+
+        .nav-cta:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 25px rgba(110, 68, 255, 0.5);
+        }
+
+        /* Mobile menu toggle */
+        .menu-toggle {
+            display: none;
+            flex-direction: column;
+            cursor: pointer;
+            padding: 5px;
+        }
+
+        .menu-toggle span {
+            width: 25px;
+            height: 3px;
+            background: #6E44FF;
+            margin: 3px 0;
+            transition: 0.3s;
+            border-radius: 3px;
+        }
+
+        /* Mobile responsive */
+        @media (max-width: 768px) {
+            .nav-menu {
+                position: fixed;
+                top: 70px;
+                left: -100%;
+                width: 100%;
+                height: calc(100vh - 70px);
+                background: rgba(10, 10, 10, 0.98);
+                backdrop-filter: blur(20px);
+                flex-direction: column;
+                justify-content: flex-start;
+                align-items: center;
+                gap: 20px;
+                padding-top: 50px;
+                transition: left 0.3s ease;
+            }
+
+            .nav-menu.active {
+                left: 0;
+            }
+
+            .menu-toggle {
+                display: flex;
+            }
+
+            .menu-toggle.active span:nth-child(1) {
+                transform: rotate(-45deg) translate(-5px, 6px);
+            }
+
+            .menu-toggle.active span:nth-child(2) {
+                opacity: 0;
+            }
+
+            .menu-toggle.active span:nth-child(3) {
+                transform: rotate(45deg) translate(-5px, -6px);
+            }
+
+            .nav-link {
+                font-size: 1.2rem;
+                padding: 15px 30px;
+            }
+        }
+
+        body {
+            font-family: 'Montserrat', sans-serif;
+            background: #0A0A0A;
+            color: #ffffff;
+            overflow-x: hidden;
+            padding-top: 80px; /* Space for fixed navbar */
+        }
+        .particles {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+            pointer-events: none;
+        }
+
+        #particleCanvas {
+            width: 100%;
+            height: 100%;
+            display: block;
+        }
+
+        /* Hero Section */
+        .hero {
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            background: linear-gradient(135deg, #0A0A0A 0%, #1A0F2E 50%, #0A0A0A 100%);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><defs><pattern id="grid" width="10" height="10" patternUnits="userSpaceOnUse"><path d="M 10 0 L 0 0 0 10" fill="none" stroke="%236E44FF" stroke-width="0.5" opacity="0.3"/></pattern></defs><rect width="100" height="100" fill="url(%23grid)"/></svg>');
+            animation: gridMove 30s linear infinite;
+            opacity: 0.4;
+        }
+
+        .hero::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 80 80"><defs><pattern id="grid2" width="8" height="8" patternUnits="userSpaceOnUse"><path d="M 8 0 L 0 0 0 8" fill="none" stroke="%2300F0FF" stroke-width="0.3" opacity="0.2"/></pattern></defs><rect width="80" height="80" fill="url(%23grid2)"/></svg>');
+            animation: gridMove2 25s linear infinite reverse;
+            opacity: 0.3;
+        }
+
+        @keyframes gridMove {
+            0% { transform: translate(0, 0) rotate(0deg); }
+            25% { transform: translate(5px, 3px) rotate(0.5deg); }
+            50% { transform: translate(10px, 10px) rotate(1deg); }
+            75% { transform: translate(3px, 15px) rotate(0.5deg); }
+            100% { transform: translate(0, 20px) rotate(0deg); }
+        }
+
+        @keyframes gridMove2 {
+            0% { transform: translate(0, 0) scale(1) rotate(0deg); }
+            33% { transform: translate(-8px, 5px) scale(1.02) rotate(-0.3deg); }
+            66% { transform: translate(-15px, -3px) scale(0.98) rotate(0.3deg); }
+            100% { transform: translate(-20px, 0) scale(1) rotate(0deg); }
+        }
+
+        .hero-content {
+            z-index: 2;
+            max-width: 1200px;
+            padding: 0 20px;
+        }
+
+        .hero h1 {
+            font-family: 'Orbitron', monospace;
+            font-size: clamp(2.5rem, 8vw, 5rem);
+            font-weight: 900;
+            background: linear-gradient(45deg, #6E44FF, #00F0FF, #6E44FF);
+            background-size: 200% 200%;
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            animation: gradientShift 3s ease-in-out infinite;
+            margin-bottom: 20px;
+            text-shadow: 0 0 30px rgba(110, 68, 255, 0.5);
+        }
+
+        @keyframes gradientShift {
+            0%, 100% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+        }
+
+        .hero h2 {
+            font-size: clamp(1.2rem, 4vw, 1.8rem);
+            margin-bottom: 30px;
+            color: #B0B0B0;
+            font-weight: 400;
+        }
+
+        .cta-button {
+            display: inline-block;
+            padding: 20px 40px;
+            background: linear-gradient(45deg, #6E44FF, #00F0FF);
+            color: white;
+            text-decoration: none;
+            border-radius: 50px;
+            font-weight: 700;
+            font-size: 1.2rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin: 20px;
+            position: relative;
+            overflow: hidden;
+            transition: all 0.3s ease;
+            box-shadow: 0 10px 30px rgba(110, 68, 255, 0.4);
+        }
+
+        .cta-button:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 20px 40px rgba(110, 68, 255, 0.6);
+        }
+
+        .cta-button::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);
+            transition: left 0.5s;
+        }
+
+        .cta-button:hover::before {
+            left: 100%;
+        }
+
+        /* Stats Section */
+        .stats {
+            background: rgba(26, 15, 46, 0.3);
+            padding: 60px 0;
+            text-align: center;
+            backdrop-filter: blur(10px);
+            border-top: 1px solid rgba(110, 68, 255, 0.3);
+            border-bottom: 1px solid rgba(110, 68, 255, 0.3);
+        }
+
+        .stats-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 40px;
+            padding: 0 20px;
+        }
+
+        .stat-item {
+            padding: 20px;
+        }
+
+        .stat-number {
+            font-family: 'Orbitron', monospace;
+            font-size: 3rem;
+            font-weight: 900;
+            color: #00F0FF;
+            display: block;
+            text-shadow: 0 0 20px rgba(0, 240, 255, 0.5);
+        }
+
+        .stat-label {
+            font-size: 1.1rem;
+            color: #B0B0B0;
+            margin-top: 10px;
+        }
+
+        /* Pain Points Section */
+        .pain-points {
+            padding: 100px 0;
+            background: linear-gradient(135deg, #0A0A0A 0%, #1A0F2E 100%);
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        .section-title {
+            font-family: 'Orbitron', monospace;
+            font-size: clamp(2rem, 6vw, 3.5rem);
+            text-align: center;
+            margin-bottom: 60px;
+            background: linear-gradient(45deg, #6E44FF, #00F0FF);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .pain-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+            margin-bottom: 60px;
+        }
+
+        .pain-card {
+            background: linear-gradient(135deg, rgba(110, 68, 255, 0.1), rgba(0, 240, 255, 0.1));
+            border: 1px solid rgba(110, 68, 255, 0.3);
+            border-radius: 20px;
+            padding: 30px;
+            text-align: center;
+            transition: all 0.3s ease;
+            backdrop-filter: blur(10px);
+        }
+
+        .pain-card:hover {
+            transform: translateY(-10px);
+            border-color: #6E44FF;
+            box-shadow: 0 20px 40px rgba(110, 68, 255, 0.2);
+        }
+
+        .pain-icon {
+            font-size: 3rem;
+            margin-bottom: 20px;
+            display: block;
+        }
+
+        .pain-title {
+            font-size: 1.3rem;
+            font-weight: 700;
+            margin-bottom: 15px;
+            color: #00F0FF;
+        }
+
+        .pain-description {
+            color: #B0B0B0;
+            line-height: 1.6;
+        }
+
+        /* Courses Section */
+        .courses {
+            padding: 100px 0;
+            background: #0A0A0A;
+        }
+
+        .courses-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 40px;
+            margin-top: 60px;
+        }
+
+        .course-card {
+            background: linear-gradient(135deg, rgba(26, 15, 46, 0.8), rgba(10, 10, 10, 0.8));
+            border: 2px solid rgba(110, 68, 255, 0.3);
+            border-radius: 25px;
+            padding: 40px;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+            transition: all 0.3s ease;
+            backdrop-filter: blur(15px);
+        }
+
+        .course-card:hover {
+            transform: scale(1.05);
+            border-color: #6E44FF;
+            box-shadow: 0 30px 60px rgba(110, 68, 255, 0.3);
+        }
+
+        .course-card::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: linear-gradient(45deg, transparent, rgba(110, 68, 255, 0.1), transparent);
+            transform: rotate(45deg);
+            transition: all 0.6s ease;
+        }
+
+        .course-card:hover::before {
+            animation: shimmer 1s ease-in-out;
+        }
+
+        @keyframes shimmer {
+            0% { transform: translateX(-100%) translateY(-100%) rotate(45deg); }
+            100% { transform: translateX(100%) translateY(100%) rotate(45deg); }
+        }
+
+        .course-title {
+            font-family: 'Orbitron', monospace;
+            font-size: 1.8rem;
+            font-weight: 700;
+            margin-bottom: 15px;
+            color: #00F0FF;
+            position: relative;
+            z-index: 2;
+        }
+
+        .course-price {
+            font-size: 2.5rem;
+            font-weight: 900;
+            color: #6E44FF;
+            margin-bottom: 20px;
+            position: relative;
+            z-index: 2;
+        }
+
+        .course-features {
+            list-style: none;
+            margin-bottom: 30px;
+            position: relative;
+            z-index: 2;
+        }
+
+        .course-features li {
+            padding: 8px 0;
+            color: #B0B0B0;
+            border-bottom: 1px solid rgba(110, 68, 255, 0.2);
+        }
+
+        .course-features li:last-child {
+            border-bottom: none;
+        }
+
+        .popular-badge {
+            position: absolute;
+            top: -10px;
+            right: -10px;
+            background: linear-gradient(45deg, #6E44FF, #00F0FF);
+            color: white;
+            padding: 10px 20px;
+            border-radius: 25px;
+            font-weight: 700;
+            font-size: 0.9rem;
+            transform: rotate(15deg);
+            box-shadow: 0 5px 15px rgba(110, 68, 255, 0.4);
+        }
+
+        /* Countdown Section */
+        .countdown-section {
+            background: linear-gradient(135deg, #6E44FF, #00F0FF);
+            padding: 60px 0;
+            text-align: center;
+            margin: 80px 0;
+        }
+
+        .countdown-title {
+            font-family: 'Orbitron', monospace;
+            font-size: 2.5rem;
+            font-weight: 900;
+            margin-bottom: 30px;
+            color: #0A0A0A;
+        }
+
+        .countdown {
+            display: flex;
+            justify-content: center;
+            gap: 30px;
+            margin-top: 30px;
+        }
+
+        .countdown-item {
+            background: rgba(10, 10, 10, 0.8);
+            border-radius: 15px;
+            padding: 20px;
+            min-width: 80px;
+        }
+
+        .countdown-number {
+            font-family: 'Orbitron', monospace;
+            font-size: 2rem;
+            font-weight: 900;
+            color: #00F0FF;
+            display: block;
+        }
+
+        .countdown-label {
+            font-size: 0.9rem;
+            color: #B0B0B0;
+            margin-top: 5px;
+        }
+
+        /* WhatsApp Float */
+        .whatsapp-float {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            background: linear-gradient(45deg, #25D366, #128C7E);
+            border-radius: 50%;
+            width: 70px;
+            height: 70px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 2rem;
+            text-decoration: none;
+            box-shadow: 0 10px 30px rgba(37, 211, 102, 0.4);
+            z-index: 1000;
+            animation: pulse 2s infinite;
+        }
+
+        @keyframes pulse {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.1); }
+            100% { transform: scale(1); }
+        }
+
+        /* FAQ Section */
+        .faq {
+            padding: 100px 0;
+            background: linear-gradient(135deg, #0A0A0A 0%, #1A0F2E 100%);
+        }
+
+        .faq-item {
+            background: rgba(26, 15, 46, 0.3);
+            border: 1px solid rgba(110, 68, 255, 0.3);
+            border-radius: 15px;
+            margin-bottom: 20px;
+            overflow: hidden;
+            backdrop-filter: blur(10px);
+        }
+
+        .faq-question {
+            padding: 25px;
+            font-weight: 700;
+            font-size: 1.2rem;
+            color: #00F0FF;
+            cursor: pointer;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            transition: all 0.3s ease;
+        }
+
+        .faq-question:hover {
+            background: rgba(110, 68, 255, 0.1);
+        }
+
+        .faq-answer {
+            padding: 0 25px 25px;
+            color: #B0B0B0;
+            line-height: 1.6;
+            border-top: 1px solid rgba(110, 68, 255, 0.2);
+        }
+
+        /* Final CTA */
+        .final-cta {
+            background: linear-gradient(135deg, #6E44FF 0%, #00F0FF 100%);
+            padding: 100px 0;
+            text-align: center;
+            color: #0A0A0A;
+        }
+
+        .final-cta h2 {
+            font-family: 'Orbitron', monospace;
+            font-size: clamp(2rem, 6vw, 4rem);
+            font-weight: 900;
+            margin-bottom: 30px;
+        }
+
+        .final-cta p {
+            font-size: 1.4rem;
+            margin-bottom: 40px;
+            font-weight: 600;
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .countdown {
+                flex-wrap: wrap;
+                gap: 15px;
+            }
+            
+            .pain-grid, .courses-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .hero {
+                padding: 20px 0;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Navigation Menu -->
+    <nav class="navbar" id="navbar">
+        <div class="nav-container">
+            <a href="#home" class="logo">CRYPTO EMPIRE</a>
+            <ul class="nav-menu" id="navMenu">
+                <li><a href="#home" class="nav-link">Inicio</a></li>
+                <li><a href="#stats" class="nav-link">Resultados</a></li>
+                <li><a href="#pain-points" class="nav-link">Problemas</a></li>
+                <li><a href="#courses" class="nav-link">Cursos</a></li>
+                <li><a href="#testimonials" class="nav-link">Testimonios</a></li>
+                <li><a href="#faq" class="nav-link">FAQ</a></li>
+                <li><a href="#courses" class="nav-cta">🚀 Acceso VIP</a></li>
+            </ul>
+            <div class="menu-toggle" id="menuToggle">
+                <span></span>
+                <span></span>
+                <span></span>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Particles Background with Canvas -->
+    <div class="particles">
+        <canvas id="particleCanvas"></canvas>
+    </div>
+
+    <!-- Hero Section -->
+    <section class="hero" id="home">
+        <div class="hero-content">
+            <h1>Convierte $100 en $10,000</h1>
+            <h2>Domina el Sistema con Nuestro Método Comprobado</h2>
+            <p style="font-size: 1.2rem; margin-bottom: 30px; color: #B0B0B0;">Accede al curso #1 en 2024 con estrategias reales que funcionan (no teoría)</p>
+            <a href="#courses" class="cta-button">🚀 Quiero el Acceso VIP AHORA</a>
+            <a href="#courses" class="cta-button">⚡ Ver Cursos Disponibles</a>
+        </div>
+    </section>
+
+    <!-- Stats Section -->
+    <section class="stats" id="stats">
+        <div class="stats-container">
+            <div class="stat-item">
+                <span class="stat-number">10,000+</span>
+                <span class="stat-label">Alumnos Exitosos</span>
+            </div>
+            <div class="stat-item">
+                <span class="stat-number">$5M+</span>
+                <span class="stat-label">Ganancias Generadas</span>
+            </div>
+            <div class="stat-item">
+                <span class="stat-number">97%</span>
+                <span class="stat-label">Tasa de Éxito</span>
+            </div>
+            <div class="stat-item">
+                <span class="stat-number">24/7</span>
+                <span class="stat-label">Soporte Premium</span>
+            </div>
+        </div>
+    </section>
+
+    <!-- Pain Points Section -->
+    <section class="pain-points" id="pain-points">
+        <div class="container">
+            <h2 class="section-title">¿Te Suena Familiar?</h2>
+            <div class="pain-grid">
+                <div class="pain-card">
+                    <span class="pain-icon">😤</span>
+                    <h3 class="pain-title">Cursos con Pura Teoría</h3>
+                    <p class="pain-description">Estás cansado de pagar por cursos que solo te dan información básica sin resultados reales.</p>
+                </div>
+                <div class="pain-card">
+                    <span class="pain-icon">⏰</span>
+                    <h3 class="pain-title">Pérdida de Tiempo</h3>
+                    <p class="pain-description">Has invertido meses aprendiendo sin ver un solo dólar de retorno en tu inversión.</p>
+                </div>
+                <div class="pain-card">
+                    <span class="pain-icon">💔</span>
+                    <h3 class="pain-title">Promesas Falsas</h3>
+                    <p class="pain-description">Te han vendido "sistemas mágicos" que nunca funcionaron para generar ingresos reales.</p>
+                </div>
+                <div class="pain-card">
+                    <span class="pain-icon">🔥</span>
+                    <h3 class="pain-title">Sin Mentoría Real</h3>
+                    <p class="pain-description">Necesitas alguien que realmente te guíe paso a paso hasta tus primeros $1,000.</p>
+                </div>
+            </div>
+            <div style="text-align: center;">
+                <h3 style="font-size: 2rem; color: #00F0FF; margin-bottom: 20px;">🎯 NUESTRA SOLUCIÓN</h3>
+                <p style="font-size: 1.3rem; color: #B0B0B0; max-width: 800px; margin: 0 auto; line-height: 1.6;">
+                    Sistema probado + IA para automatizar + Mentoría 1:1 + Comunidad privada de MILLONARIOS + Garantía 100% libre de riesgo
+                </p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Countdown Section -->
+    <section class="countdown-section">
+        <div class="container">
+            <h2 class="countdown-title">⚡ OFERTA LÍMITE DE 48 HORAS ⚡</h2>
+            <p style="font-size: 1.3rem; margin-bottom: 20px; color: #0A0A0A; font-weight: 600;">
+                ÚLTIMOS 20 CUPOS: Lleva 3 cursos por el precio de 1
+            </p>
+            <div class="countdown">
+                <div class="countdown-item">
+                    <span class="countdown-number" id="hours">23</span>
+                    <span class="countdown-label">Horas</span>
+                </div>
+                <div class="countdown-item">
+                    <span class="countdown-number" id="minutes">45</span>
+                    <span class="countdown-label">Minutos</span>
+                </div>
+                <div class="countdown-item">
+                    <span class="countdown-number" id="seconds">12</span>
+                    <span class="countdown-label">Segundos</span>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Courses Section -->
+    <section class="courses" id="courses">
+        <div class="container">
+            <h2 class="section-title">🚀 Cursos Premium</h2>
+            <div class="courses-grid">
+                <div class="course-card">
+                    <h3 class="course-title">Crypto Trading Pro 2024</h3>
+                    <div class="course-price">$497</div>
+                    <ul class="course-features">
+                        <li>✅ Sistema de trading automatizado</li>
+                        <li>✅ Estrategias para Bull & Bear Market</li>
+                        <li>✅ Bot de trading incluido</li>
+                        <li>✅ Acceso de por vida</li>
+                        <li>✅ Grupo Telegram VIP</li>
+                        <li>✅ Actualizaciones gratis</li>
+                    </ul>
+                    <a href="#" class="cta-button">Empezar Ahora</a>
+                </div>
+
+                <div class="course-card">
+                    <div class="popular-badge">MÁS POPULAR</div>
+                    <h3 class="course-title">Pack VIP Todo Incluido</h3>
+                    <div class="course-price" style="text-decoration: line-through; color: #666;">$1,999</div>
+                    <div class="course-price" style="color: #00F0FF;">$997</div>
+                    <ul class="course-features">
+                        <li>🔥 TODOS los cursos incluidos</li>
+                        <li>🔥 Mentoría 1:1 personal</li>
+                        <li>🔥 Comunidad privada de élite</li>
+                        <li>🔥 Herramientas premium</li>
+                        <li>🔥 Soporte 24/7</li>
+                        <li>🔥 Garantía 100% por 30 días</li>
+                    </ul>
+                    <a href="#" class="cta-button">¡Lo Quiero TODO!</a>
+                </div>
+
+                <div class="course-card">
+                    <h3 class="course-title">Dropshipping con IA</h3>
+                    <div class="course-price">$297</div>
+                    <ul class="course-features">
+                        <li>🤖 IA para encontrar productos</li>
+                        <li>🤖 Automatización total</li>
+                        <li>🤖 Tiendas en 24 horas</li>
+                        <li>🤖 Proveedores premium</li>
+                        <li>🤖 Marketing automatizado</li>
+                        <li>🤖 Escalado a 6 cifras</li>
+                    </ul>
+                    <a href="#" class="cta-button">Empezar Tienda</a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- FAQ Section -->
+    <section class="faq">
+        <div class="container">
+            <h2 class="section-title">❓ Preguntas Frecuentes</h2>
+            <div class="faq-item">
+                <div class="faq-question">
+                    ¿Hay garantía de devolución?
+                    <span>+</span>
+                </div>
+                <div class="faq-answer">
+                    Sí, ofrecemos 30 días 100% libre de riesgo. Si no ves resultados, te devolvemos cada centavo sin preguntas.
+                </div>
+            </div>
+            <div class="faq-item">
+                <div class="faq-question">
+                    ¿Funciona para principiantes totales?
+                    <span>+</span>
+                </div>
+                <div class="faq-answer">
+                    ¡Absolutamente! El 87% de nuestros alumnos empezó desde cero. Nuestro sistema está diseñado paso a paso para cualquier nivel.
+                </div>
+            </div>
+            <div class="faq-item">
+                <div class="faq-question">
+                    ¿Cuánto tiempo toma ver resultados?
+                    <span>+</span>
+                </div>
+                <div class="faq-answer">
+                    Nuestros alumnos promedio ven sus primeros $1,000 en las primeras 2-4 semanas siguiendo el sistema exactamente.
+                </div>
+            </div>
+            <div class="faq-item">
+                <div class="faq-question">
+                    ¿Necesito capital inicial?
+                    <span>+</span>
+                </div>
+                <div class="faq-answer">
+                    Puedes empezar con tan solo $100. Te enseñamos cómo multiplicar cualquier cantidad que tengas disponible.
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Final CTA -->
+    <section class="final-cta">
+        <div class="container">
+            <h2>¿Quieres Resultados REALES?</h2>
+            <p>¡Únete a los TOP 1% que SÍ generan dinero online!</p>
+            <a href="#courses" class="cta-button" style="color: #0A0A0A; background: linear-gradient(45deg, #ffffff, #f0f0f0);">
+                🔥 SÍ, QUIERO SER MILLONARIO
+            </a>
+        </div>
+    </section>
+
+    <!-- WhatsApp Float -->
+    <a href="https://wa.me/1234567890" class="whatsapp-float" target="_blank">
+        📞
+    </a>
+
+    <script>
+        // Canvas-based particle system that DEFINITELY works
+        function initNavigation() {
+            const navbar = document.getElementById('navbar');
+            const menuToggle = document.getElementById('menuToggle');
+            const navMenu = document.getElementById('navMenu');
+            const navLinks = document.querySelectorAll('.nav-link');
+
+            // Navbar scroll effect
+            window.addEventListener('scroll', () => {
+                if (window.scrollY > 50) {
+                    navbar.classList.add('scrolled');
+                } else {
+                    navbar.classList.remove('scrolled');
+                }
+
+                // Update active link based on scroll position
+                updateActiveLink();
+            });
+
+            // Mobile menu toggle
+            menuToggle.addEventListener('click', () => {
+                menuToggle.classList.toggle('active');
+                navMenu.classList.toggle('active');
+            });
+
+            // Close mobile menu when clicking on a link
+            navLinks.forEach(link => {
+                link.addEventListener('click', () => {
+                    menuToggle.classList.remove('active');
+                    navMenu.classList.remove('active');
+                });
+            });
+
+            // Update active navigation link
+            function updateActiveLink() {
+                const sections = ['home', 'stats', 'pain-points', 'courses', 'testimonials', 'faq'];
+                let current = '';
+
+                sections.forEach(section => {
+                    const element = document.getElementById(section);
+                    if (element) {
+                        const rect = element.getBoundingClientRect();
+                        if (rect.top <= 100 && rect.bottom >= 100) {
+                            current = section;
+                        }
+                    }
+                });
+
+                navLinks.forEach(link => {
+                    link.classList.remove('active');
+                    if (link.getAttribute('href') === `#${current}`) {
+                        link.classList.add('active');
+                    }
+                });
+            }
+        }
+        class Particle {
+            constructor(canvas) {
+                this.canvas = canvas;
+                this.reset();
+                this.colors = ['#6E44FF', '#00F0FF', '#8A2BE2', '#FFFFFF', '#FF6B9D'];
+                this.color = this.colors[Math.floor(Math.random() * this.colors.length)];
+            }
+
+            reset() {
+                this.x = Math.random() * this.canvas.width;
+                this.y = this.canvas.height + 10;
+                this.size = Math.random() * 3 + 1;
+                this.speedY = Math.random() * 2 + 0.5;
+                this.speedX = (Math.random() - 0.5) * 1;
+                this.opacity = Math.random() * 0.8 + 0.2;
+                this.life = 1;
+            }
+
+            update() {
+                this.y -= this.speedY;
+                this.x += this.speedX;
+                this.life -= 0.001;
+
+                if (this.y < -10 || this.life <= 0) {
+                    this.reset();
+                }
+            }
+
+            draw(ctx) {
+                ctx.save();
+                ctx.globalAlpha = this.opacity * this.life;
+                ctx.fillStyle = this.color;
+                ctx.shadowBlur = 10;
+                ctx.shadowColor = this.color;
+                ctx.beginPath();
+                ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
+                ctx.fill();
+                ctx.restore();
+            }
+        }
+
+        function initParticleSystem() {
+            const canvas = document.getElementById('particleCanvas');
+            const ctx = canvas.getContext('2d');
+            
+            // Set canvas size
+            function resizeCanvas() {
+                canvas.width = window.innerWidth;
+                canvas.height = window.innerHeight;
+            }
+            
+            resizeCanvas();
+            window.addEventListener('resize', resizeCanvas);
+
+            // Create particles
+            const particles = [];
+            const particleCount = 80;
+
+            for (let i = 0; i < particleCount; i++) {
+                particles.push(new Particle(canvas));
+            }
+
+            // Animation loop
+            function animate() {
+                ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+                particles.forEach(particle => {
+                    particle.update();
+                    particle.draw(ctx);
+                });
+
+                requestAnimationFrame(animate);
+            }
+
+            animate();
+        }
+
+        // Countdown timer
+        function updateCountdown() {
+            const now = new Date().getTime();
+            const endTime = now + (2 * 24 * 60 * 60 * 1000); // 2 days from now
+            
+            setInterval(() => {
+                const currentTime = new Date().getTime();
+                const timeLeft = endTime - currentTime;
+                
+                const hours = Math.floor((timeLeft % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+                const minutes = Math.floor((timeLeft % (1000 * 60 * 60)) / (1000 * 60));
+                const seconds = Math.floor((timeLeft % (1000 * 60)) / 1000);
+                
+                document.getElementById('hours').textContent = hours.toString().padStart(2, '0');
+                document.getElementById('minutes').textContent = minutes.toString().padStart(2, '0');
+                document.getElementById('seconds').textContent = seconds.toString().padStart(2, '0');
+            }, 1000);
+        }
+
+        // FAQ Toggle
+        document.querySelectorAll('.faq-question').forEach(question => {
+            question.addEventListener('click', () => {
+                const answer = question.nextElementSibling;
+                const isOpen = answer.style.display === 'block';
+                
+                // Close all other answers
+                document.querySelectorAll('.faq-answer').forEach(ans => {
+                    ans.style.display = 'none';
+                });
+                
+                // Toggle current answer
+                answer.style.display = isOpen ? 'none' : 'block';
+                
+                // Update icon
+                question.querySelector('span').textContent = isOpen ? '+' : '−';
+            });
+        });
+
+        // Smooth scrolling
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({
+                        behavior: 'smooth',
+                        block: 'start'
+                    });
+                }
+            });
+        });
+
+        // Add floating animation to course cards
+        function addFloatingAnimation() {
+            const cards = document.querySelectorAll('.course-card');
+            cards.forEach((card, index) => {
+                card.style.animation = `float 6s ease-in-out infinite`;
+                card.style.animationDelay = `${index * 0.5}s`;
+            });
+        }
+
+        // Intersection Observer for animations
+        const observerOptions = {
+            threshold: 0.1,
+            rootMargin: '0px 0px -50px 0px'
+        };
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.style.opacity = '1';
+                    entry.target.style.transform = 'translateY(0)';
+                }
+            });
+        }, observerOptions);
+
+        // Observe elements for scroll animations
+        document.querySelectorAll('.pain-card, .course-card, .stat-item').forEach(el => {
+            el.style.opacity = '0';
+            el.style.transform = 'translateY(50px)';
+            el.style.transition = 'opacity 0.6s ease, transform 0.6s ease';
+            observer.observe(el);
+        });
+
+        // Initialize everything when page loads
+        document.addEventListener('DOMContentLoaded', function() {
+            initNavigation(); // Navigation system
+            initParticleSystem(); // Canvas-based particle system
+            updateCountdown();
+            addFloatingAnimation();
+            
+            // Add some extra interactive effects
+            const buttons = document.querySelectorAll('.cta-button');
+            buttons.forEach(button => {
+                button.addEventListener('mouseenter', function() {
+                    this.style.transform = 'translateY(-5px) scale(1.05)';
+                });
+                
+                button.addEventListener('mouseleave', function() {
+                    this.style.transform = 'translateY(0) scale(1)';
+                });
+            });
+        });
+
+        // Add typing effect to hero title
+        function typeWriter(element, text, speed = 100) {
+            let i = 0;
+            element.innerHTML = '';
+            function type() {
+                if (i < text.length) {
+                    element.innerHTML += text.charAt(i);
+                    i++;
+                    setTimeout(type, speed);
+                }
+            }
+            type();
+        }
+
+        // Add glitch effect to popular badge
+        setInterval(() => {
+            const badge = document.querySelector('.popular-badge');
+            if (badge) {
+                badge.style.animation = 'none';
+                setTimeout(() => {
+                    badge.style.animation = 'glitch 0.3s ease-in-out';
+                }, 10);
+            }
+        }, 3000);
+
+        // Add glitch keyframes
+        const style = document.createElement('style');
+        style.textContent = `
+            @keyframes glitch {
+                0% { transform: rotate(15deg) translate(0); }
+                10% { transform: rotate(15deg) translate(-2px, 2px); }
+                20% { transform: rotate(15deg) translate(-2px, -2px); }
+                30% { transform: rotate(15deg) translate(2px, 2px); }
+                40% { transform: rotate(15deg) translate(2px, -2px); }
+                50% { transform: rotate(15deg) translate(-2px, 2px); }
+                60% { transform: rotate(15deg) translate(-2px, -2px); }
+                70% { transform: rotate(15deg) translate(2px, 2px); }
+                80% { transform: rotate(15deg) translate(-2px, -2px); }
+                90% { transform: rotate(15deg) translate(2px, 2px); }
+                100% { transform: rotate(15deg) translate(0); }
+            }
+        `;
+        document.head.appendChild(style);
+    </script>
+
+    <!-- Additional Sections -->
+    
+    <!-- Testimonials Section -->
+    <section style="background: linear-gradient(135deg, #1A0F2E 0%, #0A0A0A 100%); padding: 100px 0;" id="testimonials">
+        <div class="container">
+            <h2 class="section-title">💬 Lo Que Dicen Nuestros Alumnos</h2>
+            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 30px; margin-top: 60px;">
+                
+                <div style="background: rgba(26, 15, 46, 0.3); border: 1px solid rgba(110, 68, 255, 0.3); border-radius: 20px; padding: 30px; backdrop-filter: blur(10px);">
+                    <div style="display: flex; align-items: center; margin-bottom: 20px;">
+                        <div style="width: 60px; height: 60px; border-radius: 50%; background: linear-gradient(45deg, #6E44FF, #00F0FF); margin-right: 15px; display: flex; align-items: center; justify-content: center; font-weight: bold; color: white;">MR</div>
+                        <div>
+                            <h4 style="color: #00F0FF; margin-bottom: 5px;">Miguel Rodriguez</h4>
+                            <p style="color: #B0B0B0; font-size: 0.9rem;">Estudiante, México</p>
+                        </div>
+                    </div>
+                    <p style="color: #ffffff; line-height: 1.6; font-style: italic;">"Pasé de $0 a $5,000 al mes en solo 30 días. El sistema realmente funciona. La mentoría 1:1 fue clave para mi éxito."</p>
+                    <div style="color: #6E44FF; margin-top: 15px;">⭐⭐⭐⭐⭐</div>
+                </div>
+
+                <div style="background: rgba(26, 15, 46, 0.3); border: 1px solid rgba(110, 68, 255, 0.3); border-radius: 20px; padding: 30px; backdrop-filter: blur(10px);">
+                    <div style="display: flex; align-items: center; margin-bottom: 20px;">
+                        <div style="width: 60px; height: 60px; border-radius: 50%; background: linear-gradient(45deg, #6E44FF, #00F0FF); margin-right: 15px; display: flex; align-items: center; justify-content: center; font-weight: bold; color: white;">LP</div>
+                        <div>
+                            <h4 style="color: #00F0FF; margin-bottom: 5px;">Laura Pérez</h4>
+                            <p style="color: #B0B0B0; font-size: 0.9rem;">Emprendedora, España</p>
+                        </div>
+                    </div>
+                    <p style="color: #ffffff; line-height: 1.6; font-style: italic;">"Increíble. Ya genero más con dropshipping que en mi trabajo de oficina. El bot de IA hace todo el trabajo pesado."</p>
+                    <div style="color: #6E44FF; margin-top: 15px;">⭐⭐⭐⭐⭐</div>
+                </div>
+
+                <div style="background: rgba(26, 15, 46, 0.3); border: 1px solid rgba(110, 68, 255, 0.3); border-radius: 20px; padding: 30px; backdrop-filter: blur(10px);">
+                    <div style="display: flex; align-items: center; margin-bottom: 20px;">
+                        <div style="width: 60px; height: 60px; border-radius: 50%; background: linear-gradient(45deg, #6E44FF, #00F0FF); margin-right: 15px; display: flex; align-items: center; justify-content: center; font-weight: bold; color: white;">CF</div>
+                        <div>
+                            <h4 style="color: #00F0FF; margin-bottom: 5px;">Carlos Fernández</h4>
+                            <p style="color: #B0B0B0; font-size: 0.9rem;">Trader, Colombia</p>
+                        </div>
+                    </div>
+                    <p style="color: #ffffff; line-height: 1.6; font-style: italic;">"Después de perder dinero en otros cursos, este finalmente me dio resultados reales. Ya recuperé mi inversión 10 veces."</p>
+                    <div style="color: #6E44FF; margin-top: 15px;">⭐⭐⭐⭐⭐</div>
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+    <!-- Bonus Section -->
+    <section style="background: #0A0A0A; padding: 100px 0; border-top: 1px solid rgba(110, 68, 255, 0.3);">
+        <div class="container">
+            <h2 class="section-title">🎁 BONOS EXCLUSIVOS</h2>
+            <div style="text-align: center; margin-bottom: 60px;">
+                <p style="font-size: 1.3rem; color: #B0B0B0;">Al unirte HOY, recibes estos bonos valorados en +$2,000 GRATIS</p>
+            </div>
+            
+            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 30px;">
+                
+                <div style="background: linear-gradient(135deg, rgba(110, 68, 255, 0.1), rgba(0, 240, 255, 0.1)); border: 1px solid rgba(110, 68, 255, 0.3); border-radius: 20px; padding: 30px; text-align: center;">
+                    <h3 style="font-size: 1.5rem; color: #00F0FF; margin-bottom: 15px;">🤖 Bot Automatizado</h3>
+                    <p style="color: #B0B0B0; margin-bottom: 20px;">Software que trade por ti 24/7</p>
+                    <div style="font-size: 2rem; font-weight: 900; color: #6E44FF;">VALOR: $597</div>
+                </div>
+
+                <div style="background: linear-gradient(135deg, rgba(110, 68, 255, 0.1), rgba(0, 240, 255, 0.1)); border: 1px solid rgba(110, 68, 255, 0.3); border-radius: 20px; padding: 30px; text-align: center;">
+                    <h3 style="font-size: 1.5rem; color: #00F0FF; margin-bottom: 15px;">📱 App Móvil Premium</h3>
+                    <p style="color: #B0B0B0; margin-bottom: 20px;">Controla tus inversiones desde tu teléfono</p>
+                    <div style="font-size: 2rem; font-weight: 900; color: #6E44FF;">VALOR: $297</div>
+                </div>
+
+                <div style="background: linear-gradient(135deg, rgba(110, 68, 255, 0.1), rgba(0, 240, 255, 0.1)); border: 1px solid rgba(110, 68, 255, 0.3); border-radius: 20px; padding: 30px; text-align: center;">
+                    <h3 style="font-size: 1.5rem; color: #00F0FF; margin-bottom: 15px;">👥 Masterclass VIP</h3>
+                    <p style="color: #B0B0B0; margin-bottom: 20px;">Sesión exclusiva con millonarios reales</p>
+                    <div style="font-size: 2rem; font-weight: 900; color: #6E44FF;">VALOR: $1,497</div>
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+    <!-- Risk Reversal -->
+    <section style="background: linear-gradient(135deg, #6E44FF 0%, #00F0FF 100%); padding: 80px 0;">
+        <div class="container" style="text-align: center;">
+            <h2 style="font-family: 'Orbitron', monospace; font-size: 2.5rem; color: #0A0A0A; margin-bottom: 30px;">🛡️ GARANTÍA TOTAL SIN RIESGOS</h2>
+            <div style="max-width: 800px; margin: 0 auto;">
+                <p style="font-size: 1.4rem; color: #0A0A0A; margin-bottom: 30px; font-weight: 600;">
+                    Tienes 30 días completos para probar nuestro sistema. Si no generas al menos $1,000 en ese tiempo, te devolvemos cada centavo + $100 extra por las molestias.
+                </p>
+                <div style="background: rgba(10, 10, 10, 0.8); border-radius: 20px; padding: 30px; margin-top: 40px;">
+                    <h3 style="color: #00F0FF; font-size: 1.8rem; margin-bottom: 20px;">💰 GARANTÍA DOBLE</h3>
+                    <p style="color: #ffffff; font-size: 1.2rem; line-height: 1.6;">
+                        ✅ Recuperas tu dinero al 100%<br>
+                        ✅ + $100 extra de compensación<br>
+                        ✅ Sin preguntas, sin complicaciones
+                    </p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer style="background: #0A0A0A; padding: 60px 0 30px; border-top: 1px solid rgba(110, 68, 255, 0.3);">
+        <div class="container">
+            <div style="text-align: center; margin-bottom: 40px;">
+                <h3 style="font-family: 'Orbitron', monospace; font-size: 2rem; color: #6E44FF; margin-bottom: 20px;">CRYPTO EMPIRE</h3>
+                <p style="color: #B0B0B0; max-width: 600px; margin: 0 auto; line-height: 1.6;">
+                    La plataforma #1 para generar ingresos reales online. Únete a miles de estudiantes que ya han transformado sus vidas financieras.
+                </p>
+            </div>
+            
+            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 40px; margin-bottom: 40px;">
+                <div>
+                    <h4 style="color: #00F0FF; font-size: 1.2rem; margin-bottom: 20px;">🎓 Cursos</h4>
+                    <ul style="list-style: none; color: #B0B0B0; line-height: 2;">
+                        <li>Crypto Trading Pro</li>
+                        <li>Dropshipping con IA</li>
+                        <li>Amazon FBA Elite</li>
+                        <li>Pack VIP Completo</li>
+                    </ul>
+                </div>
+                
+                <div>
+                    <h4 style="color: #00F0FF; font-size: 1.2rem; margin-bottom: 20px;">🤝 Soporte</h4>
+                    <ul style="list-style: none; color: #B0B0B0; line-height: 2;">
+                        <li>WhatsApp 24/7</li>
+                        <li>Comunidad VIP</li>
+                        <li>Mentoría Personal</li>
+                        <li>Garantía 30 días</li>
+                    </ul>
+                </div>
+                
+                <div>
+                    <h4 style="color: #00F0FF; font-size: 1.2rem; margin-bottom: 20px;">📱 Síguenos</h4>
+                    <div style="display: flex; gap: 15px; font-size: 1.5rem;">
+                        <a href="#" style="color: #6E44FF; text-decoration: none;">📘</a>
+                        <a href="#" style="color: #6E44FF; text-decoration: none;">📷</a>
+                        <a href="#" style="color: #6E44FF; text-decoration: none;">🐦</a>
+                        <a href="#" style="color: #6E44FF; text-decoration: none;">📺</a>
+                    </div>
+                </div>
+            </div>
+            
+            <div style="text-align: center; padding-top: 30px; border-top: 1px solid rgba(110, 68, 255, 0.2);">
+                <p style="color: #666; font-size: 0.9rem;">
+                    © 2024 Crypto Empire. Todos los derechos reservados. | Términos y Condiciones | Política de Privacidad
+                </p>
+                <p style="color: #666; font-size: 0.8rem; margin-top: 10px;">
+                    *Los resultados pueden variar según el esfuerzo individual. No garantizamos ganancias específicas.
+                </p>
+            </div>
+        </div>
+    </footer>
+
+</body>
+</html>
